@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Phantom Battle - Transform your daily appointments into an exciting adventure. Earn XP, build streaks, and hunt ghosts while staying organized.">
+    <title>Phantom Battle - Gamify Your Daily Tasks</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #0a0a0a;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,0 C300,80 600,80 900,0 L900,120 L0,120 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: cover;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .app-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+            border-radius: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .tagline {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .hero-description {
+            font-size: 1.1em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #764ba2;
+            padding: 18px 45px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 20px;
+            background: #111;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 60px;
+            color: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            color: #a855f7;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: #ccc;
+            line-height: 1.8;
+        }
+
+        /* Screenshots Section */
+        .screenshots {
+            padding: 80px 20px;
+            background: #0a0a0a;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .screenshot-container {
+            position: relative;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            transition: transform 0.3s;
+        }
+
+        .screenshot-container:hover {
+            transform: scale(1.05);
+        }
+
+        .screenshot-placeholder {
+            width: 100%;
+            aspect-ratio: 9/19.5;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9em;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .screenshot-placeholder::before {
+            content: '📱';
+            position: absolute;
+            font-size: 4em;
+            opacity: 0.1;
+        }
+
+        .screenshot-label {
+            color: #a855f7;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 80px 20px;
+            background: #111;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            color: #a855f7;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .step p {
+            color: #ccc;
+            line-height: 1.8;
+        }
+
+        /* Coming Soon */
+        .coming-soon {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            text-align: center;
+            color: white;
+        }
+
+        .coming-soon h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .coming-soon p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .email-signup {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .email-signup input {
+            flex: 1;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1em;
+        }
+
+        .email-signup button {
+            padding: 15px 35px;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .email-signup button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: #0a0a0a;
+            color: #888;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #a855f7;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .tagline {
+                font-size: 1.2em;
+            }
+
+            .section-title {
+                font-size: 2em;
+            }
+
+            .email-signup {
+                flex-direction: column;
+            }
+
+            .email-signup button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="app-icon">👻</div>
+            <h1>Phantom Battle</h1>
+            <p class="tagline">Gamify Your Daily Tasks</p>
+            <p class="hero-description">
+                Transform your appointment management into an exciting adventure. 
+                Earn XP, level up, and hunt ghosts while staying organized.
+            </p>
+            <a href="#features" class="cta-button">Learn More</a>
+            <div class="status-badge">📱 Coming to iOS - Early 2026</div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">✨ Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Smart Appointments</h3>
+                    <p>Create and manage your appointments with ease. Set locations, times, and descriptions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Earn XP & Level Up</h3>
+                    <p>Gain 10 XP for creating appointments, 25 XP for completing daily goals. Build your character!</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔥</div>
+                    <h3>Build Streaks</h3>
+                    <p>Maintain daily habits and earn bonus rewards. 7-day streaks award 50+ bonus XP!</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👻</div>
+                    <h3>Hunt Ghosts</h3>
+                    <p>Track down ghosts that appear near your appointment locations. Turn errands into adventures!</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">☁️</div>
+                    <h3>iCloud Sync</h3>
+                    <p>Your progress syncs across all your devices via CloudKit. Never lose your data.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3>RPG-Style Progress</h3>
+                    <p>Watch your character grow as you complete real-world tasks. Productivity meets gaming!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section class="screenshots">
+        <div class="container">
+            <h2 class="section-title">📱 App Preview</h2>
+            <div class="screenshots-grid">
+                <div class="screenshot-container">
+                    <div class="screenshot-placeholder">
+                        <span>Main Menu<br>Level & XP Display</span>
+                    </div>
+                    <p class="screenshot-label">Dashboard</p>
+                </div>
+                <div class="screenshot-container">
+                    <div class="screenshot-placeholder">
+                        <span>Ghost Hunter Map<br>Live Location Tracking</span>
+                    </div>
+                    <p class="screenshot-label">Ghost Hunter</p>
+                </div>
+                <div class="screenshot-container">
+                    <div class="screenshot-placeholder">
+                        <span>Appointments List<br>Upcoming & Past Events</span>
+                    </div>
+                    <p class="screenshot-label">Appointments</p>
+                </div>
+                <div class="screenshot-container">
+                    <div class="screenshot-placeholder">
+                        <span>Create Appointment<br>Set Time & Location</span>
+                    </div>
+                    <p class="screenshot-label">Add Event</p>
+                </div>
+            </div>
+            <p style="text-align: center; color: #888; margin-top: 30px; font-style: italic;">
+                * Screenshots coming soon. App currently in development.
+            </p>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">🚀 How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Create Appointments</h3>
+                    <p>Add your daily appointments, meetings, or errands with locations and times.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Earn XP</h3>
+                    <p>Get rewarded with experience points every time you create or complete appointments.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Hunt Ghosts</h3>
+                    <p>Ghosts appear near your appointment locations. Visit them to catch ghosts and earn bonuses!</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Level Up</h3>
+                    <p>Build streaks, complete goals, and watch your character level up as you stay productive!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Coming Soon -->
+    <section class="coming-soon">
+        <div class="container">
+            <h2>🎯 Coming Soon to iOS</h2>
+            <p>Phantom Battle is currently in development. Sign up to be notified when it launches!</p>
+            <form class="email-signup" action="#" method="post">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit">Notify Me</button>
+            </form>
+            <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.8;">
+                Early 2026 • MVP Release
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Ronan Yung. All rights reserved.</p>
+            <p style="margin-top: 10px;">
+                <a href="privacy-policy.html">Privacy Policy</a> • 
+                <a href="support.html">Support</a> • 
+                <a href="mailto:contact@phantombattle.app">Contact</a>
+            </p>
+            <p style="margin-top: 20px; color: #666; font-size: 0.9em;">
+                Sydney, NSW, Australia
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
